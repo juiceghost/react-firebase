@@ -1,7 +1,5 @@
-const Firebase = () => (
-    <div>
-        <h1>Firebase</h1>
-    </div>
-);
+import FirebaseContext from './context';
+import Firebase from './firebase';
 
 export default Firebase;
+export { FirebaseContext };
