@@ -10,7 +10,7 @@ ReactDOM.render(
     <FirebaseContext.Provider value={new Firebase()}>
       <App />
     </FirebaseContext.Provider>
-  </React.StrictMode >,
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
