@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { compose } from 'recompose';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 
