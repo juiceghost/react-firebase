@@ -4,7 +4,7 @@ import { withFirebase } from '../Firebase';
 
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
-console.log(ROLES)
+
 const SignUpPage = () => (<div>
     <h1>SignUp</h1>
     <SignUpForm />
