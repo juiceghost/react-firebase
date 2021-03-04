@@ -3,6 +3,7 @@ import 'firebase/auth';
 import 'firebase/database';
 
 
+
 class Firebase {
     constructor() {
         app.initializeApp(config);
@@ -55,6 +56,19 @@ class Firebase {
     user = uid => this.db.ref(`users/${uid}`);
 
     users = () => this.db.ref('users');
+
+    // *** Message API ***
+
+    message = uid => this.db.ref(`messages/${uid}`);
+
+    messages = () => this.db.ref('messages');
+
+    // *** Settings API ***
+
+    setting = uid => this.db.ref(`settings/${uid}`)
+
+    settings = () => this.db.ref('settings');
+
 }
 export default Firebase;
 
