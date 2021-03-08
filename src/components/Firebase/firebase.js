@@ -2,16 +2,6 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-const config = {
-    apiKey: "AIzaSyArnUDeAI_arWwwZCRViq_tEEjswlaEQMk",
-    authDomain: "react-firebase-414ee.firebaseapp.com",
-    databaseURL: "https://react-firebase-414ee-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "react-firebase-414ee",
-    storageBucket: "react-firebase-414ee.appspot.com",
-    messagingSenderId: "651478386751",
-    appId: "1:651478386751:web:142f65a79ea3478621108a"
-};
-
 class Firebase {
     constructor() {
         app.initializeApp(config);

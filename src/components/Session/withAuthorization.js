@@ -8,27 +8,26 @@ import AuthUserContext from './context';
 const withAuthorization = condition => Component => {
 
     const WithAuthorization = (props) => {
-        //const authUser = useContext(AuthUserContext);
+        const authUser = useContext(AuthUserContext);
+        const { history, firebase } = props;
 
         useEffect(() => {
-            const listener = props.firebase.onAuthUserListener(
+            const listener = firebase.onAuthUserListener(
                 authUser => {
                     if (!condition(authUser)) {
-                        this.props.history.push(ROUTES.SIGN_IN);
+                        history.push(ROUTES.SIGN_IN);
                     }
                 },
-                () => this.props.history.push(ROUTES.SIGN_IN),
+                () => history.push(ROUTES.SIGN_IN),
             );
             return () => {
-                listener()
+                listener();
             };
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);
         return (
-            <AuthUserContext.Consumer>
-                {authUser =>
-                    condition(authUser) ? <Component {...this.props} /> : null
-                }
-            </AuthUserContext.Consumer >);
+            condition(authUser) ? <Component {...props} /> : null
+        );
     }
     return withRouter(withFirebase(WithAuthorization))
     /*
