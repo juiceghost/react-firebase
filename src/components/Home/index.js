@@ -1,16 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { withAuthorization, AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
 import { jobs } from '../../constants/jobs';
 
+import { Doughnut, Line, Bar } from 'react-chartjs-2';
 
 const JobPostings = () => {
+    const [jobData, setJobData] = useState(null);
+
     const openings = jobs.reduce((acc, value) => {
-        console.log(acc);
+        //console.log(acc);
         //console.log(value.agency)
 
         // Check to see if a key with the name of the current agency (value.agency) already exists within our accumulator object.
-        if (acc[value.agency]) {
+        /*if (acc[value.agency]) {
             // key fanns!
             // add 1 to its existing value.
             acc[value.agency] = acc[value.agency] + 1
@@ -18,15 +21,46 @@ const JobPostings = () => {
             // key fanns icke!
             // Add it to the accumulator object and set its value to 1
             acc[value.agency] = 1;
-        }
+        }*/
+        acc[value.agency] = acc[value.agency] ? acc[value.agency] + 1 : 1;
+
         return acc
     }, {});
-    //console.log(openings)
+    useEffect(() => {
+        console.log("Hej från useEffect")
+        setJobData(openings)
+    }, [])
 
-    return (<p>Job Postings</p>);
+    return (<>{jobData && <JobGraph data={jobData} />}</>);
 }
 
+const JobGraph = (props) => {
+    const labels = Object.keys(props.data).slice(0, 5); // todo slice off the first 3
+    const labelData = Object.values(props.data).slice(0, 5);; // todo slce
+    console.log(labels);
+    console.log(labelData)
+    const data = {
+        labels,
+        datasets: [{
+            data: labelData,
+            backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56'
+            ],
+            hoverBackgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56'
+            ]
+        }]
+    };
 
+    return (<div>
+        <h2>Job openings!</h2>
+        <Bar data={data} />
+    </div>)
+}
 const HomePage = () => (
     <div>
         <h1>Home</h1>
