@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withAuthorization, AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
-
+import { jobs } from '../../constants/jobs';
 
 const HomePage = () => (
     <div>
@@ -22,6 +22,7 @@ class MessagesBase extends Component {
     }
 
     componentDidMount() {
+        console.log(jobs)
         this.setState({ loading: true });
         this.props.firebase.messages().orderByChild('createdAt').on('value', snapshot => {
             const messageObject = snapshot.val();
@@ -83,8 +84,8 @@ class MessagesBase extends Component {
                                 onEditMessage={this.onEditMessage}
                                 authUser={authUser} />
                         ) : (
-                                <div>There are no messages ...</div>
-                            )}
+                            <div>There are no messages ...</div>
+                        )}
                         <form onSubmit={event => this.onCreateMessage(event, authUser)}>
                             <input
                                 type="text"
@@ -147,11 +148,11 @@ class MessageItem extends Component {
                         value={editText}
                         onChange={this.onChangeEditText}
                     />) : (
-                        <span>
-                            <strong>{message.userId}</strong> {message.text}
-                            {message.editedAt && <span>(Edited)</span>}
-                        </span>
-                    )}
+                    <span>
+                        <strong>{message.userId}</strong> {message.text}
+                        {message.editedAt && <span>(Edited)</span>}
+                    </span>
+                )}
                 {authUser.uid === message.userId && (
                     <span>
                         {editMode ? (
@@ -160,8 +161,8 @@ class MessageItem extends Component {
                                 <button onClick={this.onToggleEditMode}>Reset</button>
                             </span>
                         ) : (
-                                <button onClick={this.onToggleEditMode}>Edit</button>
-                            )}
+                            <button onClick={this.onToggleEditMode}>Edit</button>
+                        )}
                         {!editMode && (
                             <button
                                 type="button"
