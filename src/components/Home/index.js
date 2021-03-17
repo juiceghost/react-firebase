@@ -3,9 +3,34 @@ import { withAuthorization, AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
 import { jobs } from '../../constants/jobs';
 
+
+const JobPostings = () => {
+    const openings = jobs.reduce((acc, value) => {
+        console.log(acc);
+        //console.log(value.agency)
+
+        // Check to see if a key with the name of the current agency (value.agency) already exists within our accumulator object.
+        if (acc[value.agency]) {
+            // key fanns!
+            // add 1 to its existing value.
+            acc[value.agency] = acc[value.agency] + 1
+        } else {
+            // key fanns icke!
+            // Add it to the accumulator object and set its value to 1
+            acc[value.agency] = 1;
+        }
+        return acc
+    }, {});
+    //console.log(openings)
+
+    return (<p>Job Postings</p>);
+}
+
+
 const HomePage = () => (
     <div>
         <h1>Home</h1>
+        <JobPostings />
         <p>The Home Page is accessible by every signed in user.</p>
         <Messages />
     </div>
@@ -22,7 +47,7 @@ class MessagesBase extends Component {
     }
 
     componentDidMount() {
-        console.log(jobs)
+
         this.setState({ loading: true });
         this.props.firebase.messages().orderByChild('createdAt').on('value', snapshot => {
             const messageObject = snapshot.val();
